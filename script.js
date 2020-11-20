@@ -80,6 +80,16 @@ displayLibrary(myLibrary);
 submitBtn.addEventListener('click', (e) => {
   e.preventDefault();
   const newbook = new Book(title.value, author.value, page.value, price.value, read.checked);
+  if ((title.value === '') || (author.value === '') || (page.value === '') || (price.value === ''))  {
+  displayLibrary(myLibrary)
+  title.value = '';
+  author.value = '';
+  page.value = '';
+  price.value = '';
+  read.checked = false;
+  alert(`Can't create book because some properties are missing`)
+  return;
+  }
   addBookToLibrary(newbook);
   displayLibrary(myLibrary);
   title.value = '';
