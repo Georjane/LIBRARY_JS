@@ -9,11 +9,7 @@ const read = document.querySelector('#read');
 const myLibrary = [];
 
 function Book(title, author, pages, price, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.price = price;
-  this.read = read;
+  return {title, author, pages, price, read};
 }
 
 function addBookToLibrary(input) {
@@ -24,10 +20,9 @@ function removeBookFromLibrary(index) {
   myLibrary.splice(index, 1);
 }
 
-
-const book1 = new Book('The Boook', 'Hemingway', 200, 20, true);
-const book2 = new Book('Second Book', 'Wya', 200, 20, true);
-const book3 = new Book('Third Book', 'Aaaaia', 3010, 10, false);
+const book1 = new Book('On Becoming', 'Michelle Obama', 400, 20, true);
+const book2 = new Book('Rich Dad, Poor Dad', 'Kiyosaki', 400, 78, true);
+const book3 = new Book('Think Big', 'Ben Carson', 400, 78, true);
 addBookToLibrary(book1);
 addBookToLibrary(book2);
 addBookToLibrary(book3);
@@ -42,6 +37,7 @@ function displayLibrary(array) {
 
     const div = document.createElement('div');
     const title = document.createElement('h3');
+    div.classList.add('bookcard')
     title.textContent = book.title;
     const description = document.createElement('p');
     description.textContent = `This book is written ${book.author} 
@@ -84,6 +80,16 @@ displayLibrary(myLibrary);
 submitBtn.addEventListener('click', (e) => {
   e.preventDefault();
   const newbook = new Book(title.value, author.value, page.value, price.value, read.checked);
+  if ((title.value === '') || (author.value === '') || (page.value === '') || (price.value === ''))  {
+  displayLibrary(myLibrary)
+  title.value = '';
+  author.value = '';
+  page.value = '';
+  price.value = '';
+  read.checked = false;
+  alert(`Can't create book because some properties are missing`)
+  return;
+  }
   addBookToLibrary(newbook);
   displayLibrary(myLibrary);
   title.value = '';
